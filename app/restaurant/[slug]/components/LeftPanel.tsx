@@ -29,7 +29,7 @@ const LeftPanel = ({
       <p>{description}</p>
       <p className=" text-lg font-bold">{images.length} photos</p>
       <hr />
-      <div className=" flex gap-3">
+      <div className=" flex gap-3 flex-wrap">
         {images.map((image, indx) => {
           return (
             <Image
@@ -38,7 +38,7 @@ const LeftPanel = ({
               height={200}
               width={200}
               alt={name}
-              className=" rounded-full h-36 object-cover"
+              className=" rounded-sm shadow-[0_3px_10px_rgb(0,0,0,0.2)] h-36 object-cover"
             />
           );
         })}
