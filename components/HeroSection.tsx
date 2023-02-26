@@ -4,8 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Input, Button } from "./exportFiles";
+import Searchbar from "./Searchbar";
 
-const HeroSection = () => {
+const HeroSection = ({ params }: any) => {
+  console.log(params);
   const [location, setLocation] = useState("");
   const router = useRouter();
   return (
@@ -14,21 +16,7 @@ const HeroSection = () => {
         <h1 className=" text-4xl font-bold py-4">
           Find your table for any occasion
         </h1>
-        <div className="flex flex-col space-x-0 space-y-1 md:flex-row md:space-y-0 md:space-x-2">
-          <input
-            placeholder="State, city or town"
-            className="bg-white text-black rounded-sm px-2 w-60 md:w-96"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-          <Button
-            ripple={true}
-            className=" bg-red-500 whitespace-nowrap w-max"
-            onClick={() => router.push("/search")}
-          >
-            Let's go
-          </Button>
-        </div>
+        <Searchbar />
       </div>
     </div>
   );
