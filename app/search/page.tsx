@@ -1,11 +1,39 @@
-import Image from "next/image";
-import Link from "next/link";
+import { PrismaClient } from "@prisma/client";
 import React from "react";
 import HeroSection from "./components/HeroSection";
 import RestaurantCard from "./components/RestaurantCard";
 import SearchSidebar from "./components/SearchSidebar";
 
-const page = () => {
+const prisma = new PrismaClient();
+
+const fetchRestaurant = async (city: string | undefined) => {
+  const select = {
+    id: true,
+    main_image: true,
+    name: true,
+    cuisine: true,
+    location: true,
+    slug: true,
+  };
+  if (!city) {
+    return prisma.restaurant.findMany({
+      select,
+    });
+  }
+  return prisma.restaurant.findMany({
+    where: {
+      location: {
+        name: {
+          equals: city.toLowerCase(),
+        },
+      },
+    },
+    select,
+  });
+};
+
+const page = async ({ searchParams }: { searchParams: { city: string } }) => {
+  const restaurants = await fetchRestaurant(searchParams.city);
   return (
     <div>
       <HeroSection />
@@ -14,7 +42,11 @@ const page = () => {
         <SearchSidebar />
 
         {/* RIGHT SECTION */}
-        <RestaurantCard />
+        {restaurants.length ? (
+          <RestaurantCard />
+        ) : (
+          <p>Sorry! No results found</p>
+        )}
       </div>
     </div>
   );
