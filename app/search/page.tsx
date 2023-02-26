@@ -6,7 +6,7 @@ import SearchSidebar from "./components/SearchSidebar";
 
 const prisma = new PrismaClient();
 
-const fetchRestaurant = async (city: string | undefined) => {
+const fetchRestaurantByCity = async (city: string | undefined) => {
   const select = {
     id: true,
     main_image: true,
@@ -14,6 +14,7 @@ const fetchRestaurant = async (city: string | undefined) => {
     cuisine: true,
     location: true,
     slug: true,
+    price: true,
   };
   if (!city) {
     return prisma.restaurant.findMany({
@@ -33,7 +34,7 @@ const fetchRestaurant = async (city: string | undefined) => {
 };
 
 const page = async ({ searchParams }: { searchParams: { city: string } }) => {
-  const restaurants = await fetchRestaurant(searchParams.city);
+  const restaurants = await fetchRestaurantByCity(searchParams.city);
   return (
     <div>
       <HeroSection />
@@ -43,7 +44,13 @@ const page = async ({ searchParams }: { searchParams: { city: string } }) => {
 
         {/* RIGHT SECTION */}
         {restaurants.length ? (
-          <RestaurantCard />
+          <div className="grid grid-cols-1 gap-y-2 md:grid-cols-2 md:gap-8 place-items-center container">
+            {restaurants.map((restaurant) => {
+              return (
+                <RestaurantCard restaurant={restaurant} key={restaurant.id} />
+              );
+            })}
+          </div>
         ) : (
           <p>Sorry! No results found</p>
         )}
