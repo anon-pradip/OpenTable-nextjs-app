@@ -23,7 +23,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
           alt="restaurant main image"
           width={200}
           height={200}
-          className="h-36"
+          className="h-36 w-48 object-cover"
         />
       </div>
       <div className="flex flex-col space-y-2 justify-start items-center">
