@@ -33,10 +33,15 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
           <span>
             <Price price={restaurant.price} />
           </span>
-          <span>{restaurant.cuisine.name}</span>
-          <span>{restaurant.location.name}</span>
+          <span className=" capitalize font-bold">
+            {restaurant.cuisine.name}
+          </span>
+          <span className=" capitalize">{restaurant.location.name}</span>
         </div>
-        <Link href={`/restaurant/${restaurant.slug}`}>
+        <Link
+          href={`/restaurant/${restaurant.slug}`}
+          className=" underline  text-blue-800"
+        >
           View more information
         </Link>
       </div>

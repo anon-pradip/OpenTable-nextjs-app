@@ -1,19 +1,15 @@
+import { Cuisine, Location, PRICE } from "@prisma/client";
 import React from "react";
-const regions = [
-  { name: "toronto" },
-  { name: "ottawa" },
-  { name: "montreal" },
-  { name: "hamilton" },
-  { name: "kingston" },
-  { name: "Niagara" },
-];
 
-const cuisines = [
-  { name: "mexican" },
-  { name: "italian" },
-  { name: "chinese" },
-];
-
+interface Restaurant {
+  id: number;
+  main_image: string;
+  name: string;
+  cuisine: Cuisine;
+  location: Location;
+  slug: string;
+  price: PRICE;
+}
 const SearchSidebar = () => {
   return (
     <div>
@@ -24,13 +20,7 @@ const SearchSidebar = () => {
           className="flex flex-col justify-center items-center space-y-1
           "
         >
-          {regions.map((region, indx) => {
-            return (
-              <p key={indx} className="capitalize">
-                {region.name}
-              </p>
-            );
-          })}
+          <p>Lcations</p>
         </div>
         <hr className="h-[1px] bg-gray-300" />
       </div>
@@ -41,13 +31,7 @@ const SearchSidebar = () => {
           className="flex flex-col justify-center items-center space-y-1
           "
         >
-          {cuisines.map((cuisine, indx) => {
-            return (
-              <p key={indx} className="capitalize">
-                {cuisine.name}
-              </p>
-            );
-          })}
+          <p>Cuisines</p>
         </div>
         <hr className="h-[1px] bg-gray-300" />
       </div>
