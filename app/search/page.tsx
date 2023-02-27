@@ -113,6 +113,7 @@ const SearchPage = async ({
 }: {
   searchParams: { city: string };
 }) => {
+  console.log(searchParams);
   const restaurants = await fetchRestaurantByCity(searchParams.city);
 
   const cuisines = await fetchCuisines();
