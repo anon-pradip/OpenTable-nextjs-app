@@ -5,15 +5,23 @@ import React from "react";
 const SearchSidebar = ({
   locations,
   cuisines,
+  searchParams,
 }: {
   locations: Location[];
   cuisines: Cuisine[];
+  searchParams: {
+    location?: string;
+    city?: string;
+    cuisine?: string;
+    price?: PRICE;
+  };
 }) => {
   const prices = [
     { label: "$", price: PRICE.CHEAP },
     { label: "$$", price: PRICE.REGULAR },
     { label: "$$$", price: PRICE.EXPENSIVE },
   ];
+  console.log(searchParams);
 
   return (
     <div className="">
@@ -30,7 +38,7 @@ const SearchSidebar = ({
                 <Link
                   href={{
                     pathname: "/search",
-                    query: { city: location.name },
+                    query: { ...searchParams, city: location.name },
                   }}
                   key={location.id}
                   className="capitalize bg-gradient-to-r from-purple-400 to-pink-500 text-white font-bold py-1 px-4 rounded"
@@ -56,6 +64,7 @@ const SearchSidebar = ({
                   href={{
                     pathname: "/search",
                     query: {
+                      ...searchParams,
                       cuisine: cuisine.name,
                     },
                   }}
