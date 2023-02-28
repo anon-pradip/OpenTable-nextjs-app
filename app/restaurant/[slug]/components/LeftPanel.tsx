@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Review } from "@prisma/client";
 import { claculateAverage } from "@/utils";
+import Stars from "@/components/Stars";
 
 const LeftPanel = ({
   slug,
@@ -30,11 +31,13 @@ const LeftPanel = ({
       </div>
       <hr />
       <div className="grid grid-cols-3 divide-x divide-black max-w-max border border-black text-center font-semibold">
-        <p className="">*****</p>
+        <div>
+          <Stars reviews={reviews} />
+        </div>
         <p className=" ">{claculateAverage(reviews)}</p>
         <p className=" px-2">
           {reviews.length} review
-          {reviews.length > 1 ? "s" : ""}
+          {reviews.length == 1 ? "" : "s"}
         </p>
       </div>
       <p>{description}</p>

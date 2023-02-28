@@ -1,4 +1,5 @@
 import Price from "@/components/Price";
+import Stars from "@/components/Stars";
 import { claculateAverage } from "@/utils";
 import { Cuisine, Location, PRICE, Review } from "@prisma/client";
 import Image from "next/image";
@@ -41,7 +42,9 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
       <div className="flex flex-col space-y-2 justify-center items-start">
         <p>{restaurant.name}</p>
         <div className="flex space-x-2 justify-center items-center">
-          <p>****</p>
+          <div>
+            <Stars reviews={restaurant.reviews} />
+          </div>
           <p className=" capitalize font-bold">{renderRating()}</p>
         </div>
         <div className="flex gap-x-1 justify-start items-start">

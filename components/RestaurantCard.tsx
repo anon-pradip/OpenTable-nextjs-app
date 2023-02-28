@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { RestaurantCardType } from "@/app/page";
 import Price from "./Price";
+import Stars from "./Stars";
 
 interface Props {
   restaurant: RestaurantCardType;
@@ -23,10 +24,22 @@ const RestaurantCard = ({ restaurant }: Props) => {
         </div>
         <div className="px-1">
           <p className=" font-bold text-lg">{restaurant.name}</p>
-          <p>
-            **** {restaurant.reviews.length} review
-            {restaurant.reviews.length > 1 ? "s" : ""}
-          </p>
+          {/* <p>
+            <span>
+              <Stars reviews={restaurant.reviews} />
+            </span>
+            <span>
+              {restaurant.reviews.length} review
+              {restaurant.reviews.length > 1 ? "s" : ""}
+            </span>
+          </p> */}
+          <div className=" flex space-x-2">
+            <Stars reviews={restaurant.reviews} />
+            <span>
+              {restaurant.reviews.length} review
+              {restaurant.reviews.length > 1 ? "s" : ""}
+            </span>
+          </div>
           <div className=" flex space-x-2 capitalize">
             <p>{restaurant.cuisine.name}</p>
             <Price price={restaurant.price} />
