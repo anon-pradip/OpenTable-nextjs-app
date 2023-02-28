@@ -1,3 +1,4 @@
+import { Restaurant } from "@prisma/client";
 import React from "react";
 
 const RightSection = () => {

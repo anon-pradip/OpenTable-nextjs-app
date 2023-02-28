@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Review } from "@prisma/client";
 import Link from "next/link";
 import React from "react";
 import HeroSection from "./components/HeroSection";
@@ -14,6 +14,7 @@ interface Restaurant {
   slug: string;
   description: string;
   images: string[];
+  reviews: Review[];
 }
 
 const fetchRestaurantByslug = async (slug: string): Promise<Restaurant> => {
@@ -28,6 +29,7 @@ const fetchRestaurantByslug = async (slug: string): Promise<Restaurant> => {
       main_image: true,
       description: true,
       slug: true,
+      reviews: true,
     },
   });
   if (!restaurant) {

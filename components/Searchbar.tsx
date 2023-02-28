@@ -17,7 +17,7 @@ const Searchbar = () => {
         className=" px-3 rounded-sm placeholder:text-gray-500 text-black"
       />
       <button
-        className=" bg-red-500 px-3 py-1 rounded-md"
+        className=" px-6 py-2.5 text-white rounded-full bg-pink-500 hover:bg-pink-600"
         onClick={() => {
           if (location === "") {
             return;
