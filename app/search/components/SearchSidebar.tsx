@@ -1,4 +1,4 @@
-import { Cuisine, Location } from "@prisma/client";
+import { Cuisine, Location, PRICE } from "@prisma/client";
 import Link from "next/link";
 import React from "react";
 
@@ -9,6 +9,12 @@ const SearchSidebar = ({
   locations: Location[];
   cuisines: Cuisine[];
 }) => {
+  const prices = [
+    { label: "$", price: PRICE.CHEAP },
+    { label: "$$", price: PRICE.REGULAR },
+    { label: "$$$", price: PRICE.EXPENSIVE },
+  ];
+
   return (
     <div className="">
       {/* REGIONS */}
@@ -46,12 +52,18 @@ const SearchSidebar = ({
           >
             {cuisines.map((cuisine) => {
               return (
-                <p
+                <Link
+                  href={{
+                    pathname: "/search",
+                    query: {
+                      cuisine: cuisine.name,
+                    },
+                  }}
                   key={cuisine.id}
                   className="capitalize bg-gradient-to-r from-purple-400 to-pink-500 text-white font-bold py-1 px-4 rounded"
                 >
                   {cuisine.name}
-                </p>
+                </Link>
               );
             })}
           </div>
@@ -62,10 +74,22 @@ const SearchSidebar = ({
       {/* PRICE */}
       <div className="mt-2 flex flex-col justify-center items-center border px-2 pb-2 rounded border-gray-400">
         <h1 className="font-bold mt-4 underline text-lg">Price</h1>
-        <div className="border grid grid-cols-3 divide-x content-end">
-          <div className="px-2">01</div>
-          <div className="px-2">02</div>
-          <div className="px-2">03</div>
+        <div className="border border-black grid grid-cols-3 divide-x divide-black place-items-center px-2">
+          {prices.map(({ price, label }) => {
+            return (
+              <Link
+                href={{
+                  pathname: "/search",
+                  query: {
+                    price: price,
+                  },
+                }}
+                className="px-2 font-bold"
+              >
+                {label}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>
