@@ -76,7 +76,7 @@ const SearchPage = async ({
 
   return (
     <div>
-      <HeroSection />
+      <HeroSection />  
       <div className="max-w-screen-xl mx-auto flex flex-col justify-start items-start md:flex-row md:space-y-0 md:space-x-3 py-3 px-4">
         <SearchSidebar
           locations={locations}
