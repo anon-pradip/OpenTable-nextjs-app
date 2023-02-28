@@ -53,6 +53,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
           name={restaurant.name}
           description={restaurant.description}
           images={restaurant.images}
+          reviews={restaurant.reviews}
         />
 
         {/* right=> make reservation section */}
