@@ -6,14 +6,14 @@ import { claculateAverage } from "@/utils";
 import { Review } from "@prisma/client";
 import Image from "next/image";
 
-const Stars = ({ reviews }: { reviews: Review[] }) => {
-  const rating = Number(claculateAverage(reviews));
+const Stars = ({ reviews, rating }: { reviews: Review[]; rating?: number }) => {
+  const reviewRating = rating || Number(claculateAverage(reviews));
 
   const renderStars = () => {
     const stars = [];
 
     for (let i = 0; i < 5; i++) {
-      const difference = parseFloat((rating - i).toFixed(1));
+      const difference = parseFloat((reviewRating - i).toFixed(1));
 
       if (difference >= 1) stars.push(fullStar);
       else if (difference < 1 && difference > 0) {

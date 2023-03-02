@@ -24,15 +24,6 @@ const RestaurantCard = ({ restaurant }: Props) => {
         </div>
         <div className="px-1">
           <p className=" font-bold text-lg">{restaurant.name}</p>
-          {/* <p>
-            <span>
-              <Stars reviews={restaurant.reviews} />
-            </span>
-            <span>
-              {restaurant.reviews.length} review
-              {restaurant.reviews.length > 1 ? "s" : ""}
-            </span>
-          </p> */}
           <div className=" flex space-x-2">
             <Stars reviews={restaurant.reviews} />
             <span>

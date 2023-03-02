@@ -81,7 +81,7 @@ const LeftPanel = ({
 
                 {/* CONTENT */}
                 <div className=" flex flex-col space-y-2 max-w-md">
-                  <p>*****</p>
+                  <Stars rating={review.rating} reviews={[]} />
                   <p>{review.text}</p>
                 </div>
               </div>
