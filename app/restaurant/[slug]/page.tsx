@@ -41,7 +41,7 @@ const fetchRestaurantByslug = async (slug: string): Promise<Restaurant> => {
 const page = async ({ params }: { params: { slug: string } }) => {
   const restaurant = await fetchRestaurantByslug(params.slug);
   return (
-    <div className=" flex flex-col bg-gray-200 pb-4">
+    <div className=" flex flex-col pb-4">
       {/* Hero section */}
       <HeroSection />
 

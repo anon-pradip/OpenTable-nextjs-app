@@ -21,6 +21,7 @@ const LeftPanel = ({
   return (
     <div className="rounded-sm flex flex-col space-y-4 px-1 py-3 bg-white shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] max-w-2xl mt-4 md:-mt-10">
       {/* overview/menu */}
+
       <div className="flex space-x-5">
         <Link href={`/restaurant/${slug}`}>Overview</Link>
         <Link href={`/restaurant/${slug}/menu`}>Menu</Link>
