@@ -4,13 +4,13 @@ import Link from "next/link";
 import React from "react";
 import errorPic from "../../public/icons/error.png";
 
-export const error = ({ error }: { error: Error }) => {
+export const notFound = () => {
   return (
     <div className=" h-[89vh] bg-gray-200 flex justify-between px-24 items-center">
       <div className=" flex flex-col space-y-7">
-        <p className=" text-red-500 text-6xl font-bold">400</p>
+        <p className=" text-red-500 text-6xl font-bold">404</p>
         <p className="text-2xl text-gray-700 tracking-wider">
-          Sorry, {error.message}
+          Sorry, we couldn't find that restaurant
         </p>
         <p className="text-gray-800 font-sans max-w-md">
           But don't worry, you can find plenty of other things on our homepage.
@@ -35,4 +35,4 @@ export const error = ({ error }: { error: Error }) => {
   );
 };
 
-export default error;
+export default notFound;
