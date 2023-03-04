@@ -4,8 +4,8 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
-export default function LoginModal() {
-  const [open, setOpen] = useState(true);
+export default function LoginModal({ signin }: { signin: boolean }) {
+  const [open, setOpen] = useState(false);
 
   const cancelButtonRef = useRef(null);
 
@@ -13,10 +13,14 @@ export default function LoginModal() {
     <>
       <button
         type="button"
-        className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+        className={`${
+          signin
+            ? "bg-blue-500 text-white hover:bg-blue-700"
+            : "bg-gray-200 text-black hover:bg-gray-300"
+        } inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold  shadow-sm sm:ml-3 sm:w-auto font-sans`}
         onClick={() => setOpen(!open)}
       >
-        Sign in
+        {signin ? "Sign in" : "Sign up"}
       </button>
       <Transition.Root show={open} as={Fragment}>
         <Dialog

@@ -51,14 +51,12 @@ export default function Example() {
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 space-x-2">
-                <button
-                  type="button"
-                  className="rounded-sm bg-gray-800 px-3 py-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  Sign up
-                </button>
-                <LoginModal />
+              <div className="absolute inset-y-0 right-0 flex items-center mr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 space-x-2 ">
+                {/* sign in */}
+                <LoginModal signin={true} />
+
+                {/* signup */}
+                <LoginModal signin={false} />
               </div>
             </div>
           </div>
