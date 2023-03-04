@@ -1,9 +1,10 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import LoginModal from "./LoginModal";
 
 const navigation = [{ name: "OpenTable", href: "/", current: true }];
 
@@ -57,12 +58,7 @@ export default function Example() {
                 >
                   Sign up
                 </button>
-                <button
-                  type="button"
-                  className="rounded-sm bg-gray-800 px-3 py-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  Sign in
-                </button>
+                <LoginModal />
               </div>
             </div>
           </div>
