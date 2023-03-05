@@ -330,7 +330,6 @@ export default function LoginModal({ signin }: { signin: boolean }) {
                     </div>
                   </div>
                 </Dialog.Panel>
-                <p>implmement next auth</p>
               </Transition.Child>
             </div>
           </div>
