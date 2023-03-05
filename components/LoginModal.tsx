@@ -2,13 +2,24 @@
 
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { LockClosedIcon } from "@heroicons/react/20/solid";
+import { sign } from "crypto";
 
 export default function LoginModal({ signin }: { signin: boolean }) {
   const [open, setOpen] = useState(false);
-
   const cancelButtonRef = useRef(null);
+
+  const [inputs, setInputs] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    city: "",
+    password: "",
+  });
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
+  };
 
   return (
     <>
@@ -54,25 +65,64 @@ export default function LoginModal({ signin }: { signin: boolean }) {
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                  <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+                  <div className="flex min-h-full flex-col justify-center py-4 sm:px-6 lg:px-8">
                     <div className="sm:mx-auto sm:w-full sm:max-w-md">
                       <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
-                        Sign in to your account
+                        {signin
+                          ? "Sign in to your account"
+                          : "Sign up to create OpenTable account"}
                       </h2>
-                      <p className="mt-2 text-center text-sm text-gray-600">
-                        Or{" "}
-                        <a
-                          href="#"
-                          className="font-medium text-indigo-600 hover:text-indigo-500"
-                        >
-                          start your 14-day free trial
-                        </a>
-                      </p>
                     </div>
 
                     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                       <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
                         <form className="space-y-6" action="#" method="POST">
+                          {signin ? null : (
+                            <div className=" flex space-x-2">
+                              <div>
+                                <label
+                                  htmlFor="firstName"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  First Name
+                                </label>
+                                <div className="mt-1">
+                                  <input
+                                    id="firstName"
+                                    name="firstName"
+                                    type="text"
+                                    autoComplete="firstName"
+                                    required
+                                    className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    value={inputs.firstName}
+                                    onChange={handleChangeInput}
+                                  />
+                                </div>
+                              </div>
+
+                              <div>
+                                <label
+                                  htmlFor="lastName"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  Last Name
+                                </label>
+                                <div className="mt-1">
+                                  <input
+                                    id="lastName"
+                                    name="lastName"
+                                    type="text"
+                                    autoComplete="lastName"
+                                    required
+                                    className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    value={inputs.lastName}
+                                    onChange={handleChangeInput}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
                           <div>
                             <label
                               htmlFor="email"
@@ -88,9 +138,57 @@ export default function LoginModal({ signin }: { signin: boolean }) {
                                 autoComplete="email"
                                 required
                                 className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                value={inputs.email}
+                                onChange={handleChangeInput}
                               />
                             </div>
                           </div>
+
+                          {signin ? null : (
+                            <div className=" flex space-x-2">
+                              <div>
+                                <label
+                                  htmlFor="phone"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  Phone
+                                </label>
+                                <div className="mt-1">
+                                  <input
+                                    id="phone"
+                                    name="phone"
+                                    type="text"
+                                    autoComplete="phone"
+                                    required
+                                    className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    value={inputs.phone}
+                                    onChange={handleChangeInput}
+                                  />
+                                </div>
+                              </div>
+
+                              <div>
+                                <label
+                                  htmlFor="city"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  City
+                                </label>
+                                <div className="mt-1">
+                                  <input
+                                    id="city"
+                                    name="city"
+                                    type="text"
+                                    autoComplete="city"
+                                    required
+                                    className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    value={inputs.city}
+                                    onChange={handleChangeInput}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          )}
 
                           <div>
                             <label
@@ -107,6 +205,8 @@ export default function LoginModal({ signin }: { signin: boolean }) {
                                 autoComplete="current-password"
                                 required
                                 className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                value={inputs.password}
+                                onChange={handleChangeInput}
                               />
                             </div>
                           </div>
