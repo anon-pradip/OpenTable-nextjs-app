@@ -1,4 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+
 import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import validator from "validator";
@@ -11,18 +12,17 @@ export default async function handler(
   const errors: string[] = [];
 
   if (req.method === "POST") {
-    const { first_name, email, last_name, city, password } = req.body;
-
+    const { firstName, email, lastName, city, password } = req.body;
     const validationSchema = [
       {
-        valid: validator.isLength(first_name, {
+        valid: validator.isLength(firstName, {
           min: 1,
           max: 20,
         }),
         errorMessage: "First Name is invalid",
       },
       {
-        valid: validator.isLength(last_name, {
+        valid: validator.isLength(lastName, {
           min: 1,
           max: 20,
         }),
@@ -55,8 +55,16 @@ export default async function handler(
     }
 
     const userWithEmail = await prisma.user.findUnique({
-      where: {},
+      where: {
+        email,
+      },
     });
+
+    if (userWithEmail) {
+      return res
+        .status(400)
+        .json({ errorMessage: "Email is associated with another account!" });
+    }
 
     res.status(200).json({
       hello: "hello",
