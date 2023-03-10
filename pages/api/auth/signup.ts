@@ -86,8 +86,8 @@ export default async function handler(
       .setExpirationTime("24h")
       .setProtectedHeader({ alg })
       .sign(secret);
-    res.status(200).json({
-      hello: token,
+    return res.status(200).json({
+      token,
     });
   }
 }
