@@ -1,8 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import { PrismaClient } from "@prisma/client";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import validator from "validator";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 export default async function handler(
@@ -12,7 +13,7 @@ export default async function handler(
   const errors: string[] = [];
 
   if (req.method === "POST") {
-    const { firstName, email, lastName, city, password } = req.body;
+    const { firstName, email, lastName, city, password, phone } = req.body;
     const validationSchema = [
       {
         valid: validator.isLength(firstName, {
@@ -66,8 +67,21 @@ export default async function handler(
         .json({ errorMessage: "Email is associated with another account!" });
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.create({
+      data: {
+        first_name: firstName,
+        last_name: lastName,
+        password: hashedPassword,
+        city,
+        phone,
+        email,
+      },
+    });
+
     res.status(200).json({
-      hello: "hello",
+      hello: user,
     });
   }
 }
