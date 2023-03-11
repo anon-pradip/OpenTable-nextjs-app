@@ -7,14 +7,14 @@ export default async function handler(
   const bearerToken = req.headers["authorization"];
   if (!bearerToken) {
     res.status(401).json({
-      errorMessage: "Unauthorized request",
+      errorMessage: "Unauthorized request (no bearer token)",
     });
   }
 
   const token = bearerToken?.split(" ")[1] as string;
   if (!token) {
     res.status(401).json({
-      errorMessage: "Unauthorized request",
+      errorMessage: "Unauthorized request(no token only)",
     });
   }
 
@@ -23,7 +23,9 @@ export default async function handler(
   try {
     await jose.jwtVerify(token, secret);
   } catch (error) {
-    res.status(401).json({ errorMessage: "Unauthorized request" });
+    res
+      .status(401)
+      .json({ errorMessage: "Unauthorized request (invalid token)" });
   }
 
   return res.json({
