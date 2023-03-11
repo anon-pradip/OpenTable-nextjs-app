@@ -1,9 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import jwt from "jsonwebtoken";
 import * as jose from "jose";
+import { PrismaClient } from "@prisma/client";
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const prisma = new PrismaClient();
   const bearerToken = req.headers["authorization"];
   if (!bearerToken) {
     res.status(401).json({
@@ -19,7 +23,6 @@ export default async function handler(
   }
 
   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-
   try {
     await jose.jwtVerify(token, secret);
   } catch (error) {
@@ -27,8 +30,8 @@ export default async function handler(
       .status(401)
       .json({ errorMessage: "Unauthorized request (invalid token)" });
   }
-
+  const payload = jwt.decode(token);
   return res.json({
-    me: "pradip subedi",
+    me: payload,
   });
 }
