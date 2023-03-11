@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import * as jose from "jose";
 import { PrismaClient } from "@prisma/client";
 
@@ -10,14 +10,14 @@ export default async function handler(
   const prisma = new PrismaClient();
   const bearerToken = req.headers["authorization"];
   if (!bearerToken) {
-    res.status(401).json({
+    return res.status(401).json({
       errorMessage: "Unauthorized request (no bearer token)",
     });
   }
 
   const token = bearerToken?.split(" ")[1] as string;
   if (!token) {
-    res.status(401).json({
+    return res.status(401).json({
       errorMessage: "Unauthorized request(no token only)",
     });
   }
@@ -26,11 +26,28 @@ export default async function handler(
   try {
     await jose.jwtVerify(token, secret);
   } catch (error) {
-    res
+    return res
       .status(401)
       .json({ errorMessage: "Unauthorized request (invalid token)" });
   }
-  const payload = jwt.decode(token);
+
+  let payload: JwtPayload;
+  try {
+    payload = jwt.decode(token) as JwtPayload;
+    if (!payload || typeof payload !== "object") {
+      throw new Error("Invalid token payload");
+    }
+  } catch (error) {
+    return res
+      .status(401)
+      .json({ errorMessage: "Unauthorized request (invalid token)" });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: payload.email,
+    },
+  });
   return res.json({
     me: payload,
   });
